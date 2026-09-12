@@ -1,0 +1,175 @@
+.intro-screen {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: radial-gradient(circle at 50% 0%, #1c2030 0%, #0b0c10 70%);
+  color: #f4f4f6;
+  text-align: center;
+}
+
+.intro-card {
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+}
+
+.intro-card h1 {
+  font-size: 1.8rem;
+  margin: 0 0 4px;
+}
+
+.intro-card p {
+  margin: 0;
+  color: #c7c9d3;
+  font-size: 0.98rem;
+}
+
+.primary-btn,
+.secondary-btn {
+  width: 100%;
+  padding: 16px 20px;
+  border-radius: 14px;
+  border: none;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #7c5cff, #b34bff);
+  color: white;
+  margin-top: 10px;
+}
+
+.secondary-btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f4f4f6;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.hint {
+  font-size: 0.82rem;
+  color: #8b8d99;
+  margin-top: 4px;
+}
+
+/* --- Pantalla AR --- */
+
+.ar-screen {
+  position: fixed;
+  inset: 0;
+  background: black;
+  overflow: hidden;
+}
+
+.ar-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ar-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  pointer-events: none;
+  color: white;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.scan-frame {
+  width: 62vw;
+  max-width: 280px;
+  aspect-ratio: 1;
+  border: 3px solid rgba(255, 255, 255, 0.85);
+  border-radius: 24px;
+  box-shadow: 0 0 0 999px rgba(0, 0, 0, 0.28);
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; }
+}
+
+.ar-overlay p {
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.ar-error {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 32px;
+  text-align: center;
+  color: white;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.ar-error button {
+  padding: 12px 24px;
+  border-radius: 10px;
+  border: none;
+  background: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.exit-btn {
+  position: absolute;
+  top: max(16px, env(safe-area-inset-top));
+  right: 16px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 5;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* --- Pantalla QR --- */
+
+.qr-screen {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 32px;
+  text-align: center;
+  background: #0b0c10;
+  color: #f4f4f6;
+  position: relative;
+}
+
+.qr-image {
+  width: min(70vw, 320px);
+  height: auto;
+  background: white;
+  padding: 16px;
+  border-radius: 16px;
+  margin-top: 8px;
+}
