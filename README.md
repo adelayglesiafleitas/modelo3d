@@ -14,18 +14,16 @@ reconoce visualmente su patrón como marcador y ancla el personaje justo encima
 ## Puesta en marcha
 
 ```bash
-npm install --ignore-scripts
+npm install
 npm run dev
 ```
 
-Usa `--ignore-scripts` porque `mind-ar` trae como dependencia el paquete `canvas`
-(compilación nativa), que aquí **solo hace falta para el script de recompilar el
-QR** (ver más abajo), no para que la app funcione. Con `--ignore-scripts` te
-ahorras instalar herramientas de compilación (Visual Studio Build Tools, etc.)
-en Windows. Si alguna vez necesitas ejecutar `npm run compile:target` en tu
-propio equipo, instala `canvas` aparte (`npm install canvas`), que en Windows
-requiere las build tools de C++; si prefieres evitarlo, pídeme que recompile el
-target y te paso los archivos `public/qr.png` y `public/targets.mind`.
+Nota técnica: `mind-ar` trae como dependencia `canvas` (normalmente requiere
+compilar C++ con node-gyp, lo que falla en Windows y también en Vercel si
+faltan herramientas de compilación). El `package.json` ya trae un `overrides`
+que sustituye `canvas` por `@napi-rs/canvas` — misma API, pero con binarios
+precompilados para Windows/Linux/Mac, así que `npm install` funciona sin
+instalar nada extra, tanto en tu PC como al desplegar en Vercel.
 
 ## Probar en el móvil (necesitas HTTPS)
 
