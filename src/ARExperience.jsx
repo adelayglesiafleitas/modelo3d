@@ -28,6 +28,14 @@ export default function ARExperience({ onExit }) {
           maxTrack: 1,
           uiScanning: false,
           uiLoading: false,
+          // Ajustes de tracking: menos "temblor" del personaje y más
+          // tolerancia a que la imagen se pierda un instante (mano temblando,
+          // desenfoque de movimiento, luz que cambia) antes de dar el
+          // marcador por perdido.
+          filterMinCF: 0.0001,
+          filterBeta: 100,
+          warmupTolerance: 3,
+          missTolerance: 10,
         })
 
         const { renderer: r, scene, camera } = mindarThree

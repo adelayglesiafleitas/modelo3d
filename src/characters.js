@@ -28,7 +28,7 @@ export const CHARACTERS = [
     file: 'explorador.glb',
     // Modelo optimizado (Tripo -> gltf-transform). Sin clips de animación
     // todavía: aparece estático hasta que se rigee/anime.
-    scale: 0.45,
+    scale: 0.85,
     position: [0, -0.3, 0],
     clipPattern: null,
   },

@@ -15,10 +15,12 @@ const outPath = path.join(__dirname, '..', 'public', 'qr.png');
 
 // Alto nivel de corrección de errores ('H') = más módulos redundantes,
 // lo que le da a MindAR más textura/contraste para reconocer como marcador.
+// width a 768 (en vez de 512): más píxeles = más puntos característicos
+// para que MindAR trackee mejor el marcador.
 await QRCode.toFile(outPath, url, {
   errorCorrectionLevel: 'H',
   margin: 2,
-  width: 512,
+  width: 768,
   color: { dark: '#000000', light: '#ffffff' },
 });
 
