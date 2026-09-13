@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import ARExperience from './ARExperience.jsx'
+import { getActiveCharacter } from './characters.js'
 import './App.css'
 
 export default function App() {
   const [screen, setScreen] = useState('intro') // intro | ar | qr
-  //.
-  
+  const character = getActiveCharacter()
 
   if (screen === 'ar') {
     return <ARExperience onExit={() => setScreen('intro')} />
@@ -32,6 +32,7 @@ export default function App() {
     <div className="intro-screen">
       <div className="intro-card">
         <h1>Personaje 3D en AR</h1>
+        <p className="character-of-week">Personaje de esta semana: {character.name}</p>
         <p>
           Apunta la cámara al código QR y el personaje aparecerá animado
           sobre él, con la cámara siempre en vivo detrás.

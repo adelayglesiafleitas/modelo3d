@@ -2,11 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { MindARThree } from 'mind-ar/dist/mindar-image-three.prod.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-
-// Nombre de la animación a reproducir cuando aparece el personaje.
-// RobotExpressive.glb (placeholder) trae varios clips: Idle, Walking, Running,
-// Dance, Death, Sitting, Standing, Jump, Yes, No, Wave, Punch, ThumbsUp.
-const PREFERRED_CLIP = /dance|wave|idle/i
+import { getActiveCharacter } from './characters.js'
 
 export default function ARExperience({ onExit }) {
   const containerRef = useRef(null)
@@ -23,6 +19,7 @@ export default function ARExperience({ onExit }) {
     const init = async () => {
       try {
         const base = import.meta.env.BASE_URL
+        const character = getActiveCharacter()
 
         mindarThree = new MindARThree({
           container: containerRef.current,
@@ -48,18 +45,19 @@ export default function ARExperience({ onExit }) {
         clock = new THREE.Clock()
         const loader = new GLTFLoader()
         loader.load(
-          `${base}character.glb`,
+          `${base}characters/${character.file}`,
           (gltf) => {
             if (cancelled) return
             const model = gltf.scene
-            model.scale.setScalar(0.4)
-            model.position.set(0, -0.35, 0)
+            model.scale.setScalar(character.scale)
+            model.position.set(...character.position)
             anchor.group.add(model)
 
             if (gltf.animations && gltf.animations.length > 0) {
               mixer = new THREE.AnimationMixer(model)
               const clip =
-                gltf.animations.find((a) => PREFERRED_CLIP.test(a.name)) ||
+                (character.clipPattern &&
+                  gltf.animations.find((a) => character.clipPattern.test(a.name))) ||
                 gltf.animations[0]
               mixer.clipAction(clip).play()
             }

@@ -28,6 +28,18 @@
   font-size: 0.98rem;
 }
 
+.character-of-week {
+  display: inline-block;
+  align-self: center;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(179, 75, 255, 0.18);
+  border: 1px solid rgba(179, 75, 255, 0.4);
+  color: #e4d6ff !important;
+  font-size: 0.85rem !important;
+  font-weight: 600;
+}
+
 .primary-btn,
 .secondary-btn {
   width: 100%;

@@ -53,30 +53,57 @@ de regenerarlos.
 Para imprimir el QR o mostrarlo en una pantalla, la propia app tiene un botón
 "Ver / imprimir el código QR" en la pantalla de inicio.
 
-## Cambiar el personaje 3D
+El QR en sí **no cambia** de un personaje a otro — es siempre el mismo enlace y
+el mismo marcador. Lo que cambia semana a semana es qué personaje carga la app
+al reconocerlo (ver siguiente sección), así que no hace falta reimprimir nada.
 
-Ahora mismo se usa un modelo de prueba: `public/character.glb`
-(**RobotExpressive.glb**, CC-BY 4.0 de Tomás Laulhé, vía los ejemplos de
-three.js). Trae varias animaciones (Idle, Dance, Wave, Walking, Running...).
+## Personaje de la semana
 
-Para poner tu propio personaje animado:
+Los personajes disponibles y cuál está activo se controlan desde
+`src/characters.js`:
 
-1. Exporta tu modelo como `.glb` con al menos un clip de animación (desde Maya:
-   exporta a FBX y conviértelo a glTF/GLB, por ejemplo con Blender o con la
-   herramienta [FBX2glTF](https://github.com/facebookincubator/FBX2glTF)).
-2. Sustituye `public/character.glb` por el tuyo (mismo nombre de archivo).
-3. Si el clip que quieres reproducir no se llama "Dance", "Wave" ni "Idle",
-   ajusta `PREFERRED_CLIP` en `src/ARExperience.jsx` (o indica directamente el
-   índice/nombre del clip que quieres reproducir).
-4. Ajusta escala/posición en `src/ARExperience.jsx` si el modelo aparece
-   demasiado grande/pequeño o descentrado (`model.scale`, `model.position`).
+```js
+export const ACTIVE_CHARACTER_ID = 'explorador'
+
+export const CHARACTERS = [
+  { id: 'robot', name: 'Robot', file: 'robot.glb', ... },
+  { id: 'explorador', name: 'Explorador', file: 'explorador.glb', ... },
+]
+```
+
+**Para cambiar el personaje de la semana**: cambia `ACTIVE_CHARACTER_ID` por el
+`id` de otro personaje de la lista, guarda y despliega. Es una elección manual
+— tú decides cada semana cuál toca, la app no rota sola.
+
+**Para añadir un personaje nuevo**:
+
+1. Exporta tu modelo como `.glb` (idealmente con al menos un clip de
+   animación — desde Maya: exporta a FBX y conviértelo a glTF/GLB, por
+   ejemplo con Blender o con [FBX2glTF](https://github.com/facebookincubator/FBX2glTF)).
+   Si el archivo pesa mucho (varios MB) u tiene muchísimos polígonos, vale la
+   pena pasarlo antes por [`gltf-transform`](https://gltf-transform.dev/) para
+   aligerarlo — un móvil escaneando un QR no debería esperar a descargar
+   decenas de MB.
+2. Pon el `.glb` en `public/characters/` (por ejemplo `public/characters/mi-personaje.glb`).
+3. Añade una entrada en el array `CHARACTERS` de `src/characters.js` con su
+   `id`, `name`, `file`, `scale` y `position`. Si el clip que quieres
+   reproducir no se llama "Dance", "Wave" ni "Idle", ajusta `clipPattern` (o
+   pon `null` si el modelo no tiene animación — aparecerá estático).
+4. Ajusta `scale`/`position` si el modelo aparece demasiado grande/pequeño o
+   descentrado sobre el marcador.
+
+El nombre del personaje activo se muestra también en la pantalla de inicio de
+la app ("Personaje de esta semana: ...").
 
 ## Estructura
 
-- `src/App.jsx` — pantalla de inicio, pantalla del QR y pantalla de AR.
-- `src/ARExperience.jsx` — inicializa MindAR + Three.js, carga el `.glb` y
-  reproduce su animación al detectar el marcador.
-- `public/character.glb` — modelo 3D animado (placeholder).
+- `src/App.jsx` — pantalla de inicio (muestra el personaje activo), pantalla
+  del QR y pantalla de AR.
+- `src/characters.js` — registro de personajes disponibles y cuál está activo.
+- `src/ARExperience.jsx` — inicializa MindAR + Three.js, carga el `.glb` del
+  personaje activo y reproduce su animación (si tiene) al detectar el marcador.
+- `public/characters/` — modelos 3D de los personajes (`robot.glb` es el
+  placeholder original, `explorador.glb` el primero real).
 - `public/targets.mind` — marcador de imagen compilado por MindAR a partir de
   `public/qr.png`.
 - `scripts/generate-qr.mjs` — genera `public/qr.png` a partir de una URL.
