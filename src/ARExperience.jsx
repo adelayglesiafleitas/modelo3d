@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { MindARThree } from 'mind-ar/dist/mindar-image-three.prod.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js'
 import { getActiveCharacter } from './characters.js'
 
 export default function ARExperience({ onExit }) {
@@ -44,6 +45,7 @@ export default function ARExperience({ onExit }) {
 
         clock = new THREE.Clock()
         const loader = new GLTFLoader()
+        loader.setMeshoptDecoder(MeshoptDecoder)
         loader.load(
           `${base}characters/${character.file}`,
           (gltf) => {
