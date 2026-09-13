@@ -4,6 +4,8 @@ import './App.css'
 
 export default function App() {
   const [screen, setScreen] = useState('intro') // intro | ar | qr
+  //.
+  
 
   if (screen === 'ar') {
     return <ARExperience onExit={() => setScreen('intro')} />
